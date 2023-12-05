@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout.html}"
+>
+  <body>
+    <div layout:fragment="content">
+      <h1>Messages</h1>
+
+      <a class="btn btn-primary" href="/messages/add">Add a message</a>
+
+      <ul>
+        <li th:each="message: ${messages}" th:text="${message.content}"></li>
+      </ul>
+    </div>
+  </body>
+</html>

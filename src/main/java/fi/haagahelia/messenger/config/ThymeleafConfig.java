@@ -1,0 +1,29 @@
+package fi.haagahelia.messenger.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
+
+import nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect;
+
+@Configuration
+public class ThymeleafConfig {
+    @Bean
+    public LayoutDialect layoutDialect() {
+        return new LayoutDialect();
+    }
+
+    @Bean
+    public ClassLoaderTemplateResolver secondaryTemplateResolver() {
+        ClassLoaderTemplateResolver secondaryTemplateResolver = new ClassLoaderTemplateResolver();
+        secondaryTemplateResolver.setPrefix("static/");
+        secondaryTemplateResolver.setSuffix(".html");
+        secondaryTemplateResolver.setTemplateMode(TemplateMode.HTML);
+        secondaryTemplateResolver.setCharacterEncoding("UTF-8");
+        secondaryTemplateResolver.setOrder(1);
+        secondaryTemplateResolver.setCheckExistence(true);
+
+        return secondaryTemplateResolver;
+    }
+}
