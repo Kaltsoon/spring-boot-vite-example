@@ -15,7 +15,7 @@ import fi.haagahelia.messenger.repository.UserRepository;
 @Service
 public class UserService {
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
