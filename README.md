@@ -1,5 +1,7 @@
 # Spring Boot Vite example
 
+[![CI](https://github.com/Kaltsoon/spring-boot-vite-example/actions/workflows/ci.yml/badge.svg)](https://github.com/Kaltsoon/spring-boot-vite-example/actions/workflows/ci.yml)
+
 This is an example of a single-page application implemented with Spring Boot and React. Vite is used as the frontend build tool.
 
 ## Usage guide
