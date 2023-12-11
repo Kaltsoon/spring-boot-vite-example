@@ -12,8 +12,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
+import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -30,18 +30,19 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        RequestMatcher matcherLogin = new AntPathRequestMatcher("/api/auth/login", HttpMethod.POST.toString());
-        RequestMatcher matcherRegister = new AntPathRequestMatcher("/api/users", HttpMethod.POST.toString());
-        RequestMatcher matcherCurrentUser = new AntPathRequestMatcher("/api/users/current");
-        RequestMatcher matcherAssets = new AntPathRequestMatcher("/assets/**");
-        RequestMatcher matcherAllMessages = new AntPathRequestMatcher("/api/messages");
+        RequestMatcher matcherLogin = antMatcher(HttpMethod.POST, "/api/auth/login");
+        RequestMatcher matcherRegister = antMatcher(HttpMethod.POST, "/api/users");
+        RequestMatcher matcherCurrentUser = antMatcher("/api/users/current");
+        RequestMatcher matcherAssets = antMatcher("/assets/**");
+        RequestMatcher matcherAllMessages = antMatcher(HttpMethod.GET, "/api/messages");
+        RequestMatcher matcherMessageById = antMatcher(HttpMethod.GET, "/api/messages/*");
 
         http.csrf(csrf -> csrf.disable())
                 .sessionManagement(
                         sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
                         .requestMatchers(matcherLogin, matcherRegister, matcherCurrentUser, matcherAssets,
-                                matcherAllMessages)
+                                matcherAllMessages, matcherMessageById)
                         .permitAll()
                         .anyRequest()
                         .authenticated())
