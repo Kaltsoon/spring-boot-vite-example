@@ -23,7 +23,7 @@ Then, you can start the backend application by performing the following steps:
 1. Start the server by running the `./mvnw spring-boot:run` command
 2. Once the server has started, the application is accessible at <http://localhost:8080>
 
-### Running backend tests
+#### Running tests
 
 You can run the backend tests by running the `./mvnw test` command.
 
