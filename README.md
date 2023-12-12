@@ -20,17 +20,17 @@ You need to perform the following steps to setup the backend:
 
 Then, you can start the backend application by performing the following steps:
 
-1. Run `./mvnw spring-boot:run` command
+1. Start the server by running the `./mvnw spring-boot:run` command
 2. Once the server has started, the application is accessible at <http://localhost:8080>
+
+#### Running tests
+
+You can run the backend tests by running the `./mvnw test` command.
 
 ### Frontend development
 
 You can start the frontend application by performing the following steps in the `frontend` folder:
 
-1. Install the dependencies by running `npm install`
-2. Start the Vite development server by running `npm run dev`
+1. Install the dependencies by running the `npm install` command
+2. Start the Vite development server by running the `npm run dev` command
 3. Once the development server has started, the application is accessible at <http://localhost:5173>
-
-### Running backend tests
-
-You can run the backend tests by running the `./mvnw test` command.
