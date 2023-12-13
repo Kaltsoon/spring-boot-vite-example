@@ -7,7 +7,7 @@ This is an example project for a single-page application implemented with Spring
 
 ## Usage guide
 
-### Backend development
+### Backend
 
 You need to perform the following steps to setup the backend:
 
@@ -28,7 +28,7 @@ Then, you can start the backend application by performing the following steps:
 
 You can run the backend tests by running the `./mvnw test` command.
 
-### Frontend development
+### Frontend
 
 You can start the frontend application by performing the following steps in the `frontend` folder:
 
