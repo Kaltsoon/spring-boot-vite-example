@@ -35,3 +35,7 @@ You can start the frontend application by performing the following steps in the 
 1. Install the dependencies by running the `npm install` command
 2. Start the Vite development server by running the `npm run dev` command
 3. Once the development server has started, the application is accessible at <http://localhost:5173>
+
+### Docker
+
+Docker can be used to deploy the application or run it locally. The Docker container requires the environment variables defined in the [production.properties](https://github.com/Kaltsoon/spring-boot-vite-example/blob/main/src/main/resources/production.properties) file.
