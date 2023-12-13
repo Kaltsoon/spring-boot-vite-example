@@ -20,10 +20,10 @@ public class JwtService {
 	private final String PREFIX = "Bearer ";
 
 	@Value("${auth.jwt-secret}")
-	private String JWT_SECRET;
+	private String jwtSecret;
 
 	private Key getSigningKey() {
-		byte[] keyBytes = JWT_SECRET.getBytes(StandardCharsets.UTF_8);
+		byte[] keyBytes = jwtSecret.getBytes(StandardCharsets.UTF_8);
 		return Keys.hmacShaKeyFor(keyBytes);
 	}
 
