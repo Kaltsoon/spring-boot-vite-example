@@ -38,4 +38,4 @@ You can start the frontend application by performing the following steps in the 
 
 ### Docker
 
-Docker can be used to deploy the application or run it locally. The Docker container requires the environment variables defined in the [production.properties](https://github.com/Kaltsoon/spring-boot-vite-example/blob/main/src/main/resources/production.properties) file.
+Docker can be used to deploy the application (both backend and frontend) or run it locally. The Docker container requires the environment variables defined in the [production.properties](https://github.com/Kaltsoon/spring-boot-vite-example/blob/main/src/main/resources/production.properties) file. In the production build, the frontend is accessible at the `/app` path.
