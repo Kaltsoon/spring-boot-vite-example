@@ -14,7 +14,7 @@ function App() {
     <>
       <CssBaseline />
       <QueryClientProvider client={queryClient}>
-        <BrowserRouter basename={import.meta.env.VITE_ROUTER_BASENAME}>
+        <BrowserRouter>
           <>
             <AppBar />
             <Container sx={{ marginY: 2 }}>

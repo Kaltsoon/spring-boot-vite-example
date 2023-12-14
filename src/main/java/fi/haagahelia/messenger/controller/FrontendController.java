@@ -1,13 +1,12 @@
 package fi.haagahelia.messenger.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class FrontendController {
-    @GetMapping("/app/**")
-	public String renderFrontend(Model model) {
+    @GetMapping(path = { "/", "/{prefix:^(?!api|frontend).+}/**" })
+	public String renderFrontend() {
 		return "index";
 	}
 }

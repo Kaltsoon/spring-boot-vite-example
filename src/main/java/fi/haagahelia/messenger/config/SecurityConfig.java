@@ -30,19 +30,21 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        RequestMatcher matcherIndex = antMatcher(HttpMethod.GET, "/");
+        RequestMatcher matcherFrontend = antMatcher(HttpMethod.GET, "/{prefix:^(?!api).+}/**");
+        RequestMatcher matcherAssets = antMatcher(HttpMethod.GET, "/frontend/**");
         RequestMatcher matcherLogin = antMatcher(HttpMethod.POST, "/api/auth/login");
         RequestMatcher matcherRegister = antMatcher(HttpMethod.POST, "/api/users");
-        RequestMatcher matcherCurrentUser = antMatcher("/api/users/current");
-        RequestMatcher matcherAssets = antMatcher("/assets/**");
         RequestMatcher matcherAllMessages = antMatcher(HttpMethod.GET, "/api/messages");
         RequestMatcher matcherMessageById = antMatcher(HttpMethod.GET, "/api/messages/*");
+        RequestMatcher matcherError = antMatcher("/error");
 
         http.csrf(csrf -> csrf.disable())
                 .sessionManagement(
                         sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-                        .requestMatchers(matcherLogin, matcherRegister, matcherCurrentUser, matcherAssets,
-                                matcherAllMessages, matcherMessageById)
+                        .requestMatchers(matcherIndex, matcherFrontend, matcherAssets, matcherLogin, matcherRegister,
+                                matcherAllMessages, matcherMessageById, matcherError)
                         .permitAll()
                         .anyRequest()
                         .authenticated())

@@ -21,7 +21,9 @@ export default function MessageList() {
       </Typography>
       <ul>
         {messages.map((message) => (
-          <li key={message.id}>{message.content}</li>
+          <li key={message.id}>
+            {message.user?.username}: {message.content}
+          </li>
         ))}
       </ul>
 
