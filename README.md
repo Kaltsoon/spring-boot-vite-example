@@ -1,9 +1,9 @@
-# Spring Boot Vite example
+# Messenger
 
 [![CI](https://github.com/Kaltsoon/spring-boot-vite-example/actions/workflows/ci.yml/badge.svg)](https://github.com/Kaltsoon/spring-boot-vite-example/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/Kaltsoon/spring-boot-vite-example/graph/badge.svg?token=FU2MFP4JLH)](https://codecov.io/gh/Kaltsoon/spring-boot-vite-example)
 
-This is an example project for a single-page application implemented with Spring Boot and React.
+_Messenger_ is a simple messaging application where registered users can post messages. The project acts as an example project for a single-page application implemented with Spring Boot and React.
 
 ## Architecture overview
 
@@ -38,7 +38,7 @@ You can run the backend tests by running the `./mvnw test` command.
 
 #### Running with Docker
 
-Docker can be used to deploy the backend application or run it locally. In the production environment, the Docker container requires the environment variables defined in the [production.properties](https://github.com/Kaltsoon/spring-boot-vite-example/blob/main/src/main/resources/production.properties) file. 
+Docker can be used to deploy the backend application or run it locally. In the production environment, the Docker container requires the environment variables defined in the [production.properties](https://github.com/Kaltsoon/spring-boot-vite-example/blob/main/src/main/resources/production.properties) file.
 
 The backend application can be started with Docker by performing the following steps:
 
@@ -55,3 +55,7 @@ You can start the frontend application by performing the following steps in the 
 1. Install the dependencies by running the `npm install` command
 2. Start the Vite development server by running the `npm run dev` command
 3. Once the development server has started, the application is accessible at <http://localhost:5173>
+
+## Documentation
+
+- [Swagger documentation](http://localhost:8080/swagger-ui/index.html)

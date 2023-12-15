@@ -12,7 +12,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.RequestMatcher;
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 import static org.springframework.security.config.Customizer.withDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,18 +29,23 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        RequestMatcher matcherLogin = antMatcher(HttpMethod.POST, "/api/auth/login");
-        RequestMatcher matcherRegister = antMatcher(HttpMethod.POST, "/api/users");
-        RequestMatcher matcherAllMessages = antMatcher(HttpMethod.GET, "/api/messages");
-        RequestMatcher matcherMessageById = antMatcher(HttpMethod.GET, "/api/messages/*");
-        RequestMatcher matcherError = antMatcher("/error");
-
         http.csrf(csrf -> csrf.disable()).cors(withDefaults())
                 .sessionManagement(
-                        sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                        sessionManagement -> sessionManagement
+                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-                        .requestMatchers(matcherLogin, matcherRegister,
-                                matcherAllMessages, matcherMessageById, matcherError)
+                        .requestMatchers(
+                                antMatcher(HttpMethod.POST, "/api/auth/login"),
+                                antMatcher(HttpMethod.POST, "/api/users"),
+                                antMatcher(HttpMethod.GET, "/api/messages"),
+                                antMatcher(HttpMethod.GET, "/api/messages/*"),
+                                antMatcher("/error"),
+                                // Swagger paths
+                                antMatcher(HttpMethod.GET, "/v3/api-docs/**"),
+                                antMatcher(HttpMethod.GET, "/configuration/ui"),
+                                antMatcher(HttpMethod.GET, "/swagger-resources/**"),
+                                antMatcher(HttpMethod.GET, "/configuration/security"),
+                                antMatcher(HttpMethod.GET, "/swagger-ui/**"))
                         .permitAll()
                         .anyRequest()
                         .authenticated())

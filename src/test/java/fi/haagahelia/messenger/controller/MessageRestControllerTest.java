@@ -55,7 +55,8 @@ public class MessageRestControllerTest {
         userRepository.deleteAll();
 
         this.authenticatedUser = userService.registerUser(new RegisterUserDto("johndoe", "john123"));
-        this.authorizationHeader = "Bearer " + jwtService.getToken(authenticatedUser.getUsername());
+        this.authorizationHeader = "Bearer "
+                + jwtService.getAccessToken(authenticatedUser.getUsername()).getAccessToken();
     }
 
     @Test

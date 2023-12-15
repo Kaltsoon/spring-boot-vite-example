@@ -1,7 +1,6 @@
 package fi.haagahelia.messenger.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,13 +14,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import fi.haagahelia.messenger.dto.AccessTokenPayloadDto;
 import fi.haagahelia.messenger.dto.LoginUserDto;
 import fi.haagahelia.messenger.service.JwtService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/auth")
 @CrossOrigin(origins = "*")
+@Tag(name = "Authentication", description = "Operations for authentication")
 public class AuthRestController {
     @Autowired
     private JwtService jwtService;
@@ -29,6 +32,7 @@ public class AuthRestController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Operation(summary = "Authenticate a user", description = "Authenticates the user and returns an access token upon a successful authentication")
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginUserDto login, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -41,10 +45,9 @@ public class AuthRestController {
 
         try {
             Authentication auth = authenticationManager.authenticate(credentials);
-            String jwts = jwtService.getToken(auth.getName());
+            AccessTokenPayloadDto accessTokenPayload = jwtService.getAccessToken(auth.getName());
 
-            return ResponseEntity.ok().header(HttpHeaders.AUTHORIZATION, "Bearer " + jwts)
-                    .header(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "Authorization").build();
+            return ResponseEntity.ok().body(accessTokenPayload);
         } catch (Exception exception) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Invalid username or password");
         }

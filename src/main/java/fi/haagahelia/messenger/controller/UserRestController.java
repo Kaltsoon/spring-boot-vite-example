@@ -18,11 +18,14 @@ import fi.haagahelia.messenger.dto.RegisterUserDto;
 import fi.haagahelia.messenger.model.User;
 import fi.haagahelia.messenger.repository.UserRepository;
 import fi.haagahelia.messenger.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/users")
 @CrossOrigin(origins = "*")
+@Tag(name = "User", description = "Operations for accessing and managing users")
 public class UserRestController {
     @Autowired
     private UserRepository userRepository;
@@ -30,11 +33,19 @@ public class UserRestController {
     @Autowired
     private UserService userService;
 
+    @Operation(
+        summary = "Get all users",
+        description = "Returns all users"
+    )
     @GetMapping("")
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
+    @Operation(
+        summary = "Create a user",
+        description = "Creates a new user and returns the created user"
+    )
     @PostMapping("")
     public User createUser(@Valid @RequestBody RegisterUserDto registration, BindingResult bindingResult) {
         Optional<User> existingUser = userRepository.findOneByUsername(registration.getUsername());
@@ -52,6 +63,10 @@ public class UserRestController {
         return userService.registerUser(registration);
     }
 
+     @Operation(
+        summary = "Get the currently authenticated user",
+        description = "Returns the currently authenticated user"
+    )
     @GetMapping("/current")
     public User getCurrentUser() {
         return userService.getAuthenticatedUser()

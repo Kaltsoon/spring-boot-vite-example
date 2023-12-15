@@ -19,11 +19,14 @@ import fi.haagahelia.messenger.model.Message;
 import fi.haagahelia.messenger.model.User;
 import fi.haagahelia.messenger.repository.MessageRepository;
 import fi.haagahelia.messenger.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/messages")
 @CrossOrigin(origins = "*")
+@Tag(name = "Message", description = "Operations for accessing and managing messages")
 public class MessageRestController {
 	@Autowired
 	private MessageRepository messageRepository;
@@ -31,17 +34,29 @@ public class MessageRestController {
 	@Autowired
 	private UserService userService;
 
+	@Operation(
+        summary = "Get all messages",
+        description = "Returns all messages"
+    )
 	@GetMapping("")
 	public List<Message> getAllMessages() {
 		return messageRepository.findAll();
 	}
 
+	@Operation(
+        summary = "Get message by id",
+        description = "Returns the message associated with the provided id"
+    )
 	@GetMapping("/{id}")
 	public Message getMessageById(@PathVariable Long id) {
 		return messageRepository.findById(id).orElseThrow(
 				() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Message with id " + id + " does not exist"));
 	}
 
+	@Operation(
+        summary = "Create a message",
+        description = "Creates a new message and returns the created message"
+    )
 	@PostMapping("")
 	public Message createMessage(@Valid @RequestBody CreateMessageDto message, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {

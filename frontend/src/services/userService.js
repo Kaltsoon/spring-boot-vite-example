@@ -6,9 +6,11 @@ import {
 
 export function login(credentials) {
   return apiClient.post("/api/auth/login", credentials).then((response) => {
-    if (response.headers.authorization) {
-      setAuthenticationToken(response.headers.authorization);
+    if (response.data.accessToken) {
+      setAuthenticationToken(response.data.accessToken);
     }
+
+    return response.data;
   });
 }
 
