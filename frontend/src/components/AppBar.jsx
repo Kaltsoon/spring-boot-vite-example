@@ -26,8 +26,6 @@ export default function AppBar() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const { authenticatedUser } = useAuthenticatedUser();
 
-  console.log(authenticatedUser)
-
   useEffect(() => {
     setDrawerOpen(false);
   }, [location]);

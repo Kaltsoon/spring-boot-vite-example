@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_API_URL ?? "";
+
 export function setAuthenticationToken(token) {
   localStorage.setItem("AUTH_TOKEN", token);
 }
@@ -13,7 +15,7 @@ export function getAuthenticationToken() {
 }
 
 export const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: API_URL,
 });
 
 apiClient.interceptors.request.use((config) => {

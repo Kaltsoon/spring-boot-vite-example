@@ -3,13 +3,21 @@
 [![CI](https://github.com/Kaltsoon/spring-boot-vite-example/actions/workflows/ci.yml/badge.svg)](https://github.com/Kaltsoon/spring-boot-vite-example/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/Kaltsoon/spring-boot-vite-example/graph/badge.svg?token=FU2MFP4JLH)](https://codecov.io/gh/Kaltsoon/spring-boot-vite-example)
 
-This is an example project for a single-page application implemented with Spring Boot and React. Vite is used as the frontend build tool.
+This is an example project for a single-page application implemented with Spring Boot and React.
+
+## Architecture overview
+
+The project architecture consists of the _backend application_ and the _frontend application_. The backend application is a RESTful web service implemented with [Spring Boot](https://spring.io/projects/spring-boot). It provides a REST API endpoints for the frontend application. The backend application's authentication is implemented with a stateless [JWT token](https://jwt.io/introduction) authentication. The backend application uses [H2 Database Engine](https://www.h2database.com/html/main.html) as a development environment database and [PostgreSQL](https://www.postgresql.org/) as a production environment database.
+
+The frontend application is implemented with [React](https://react.dev/). The user-interface is implemented with [Material UI](https://mui.com/). The [Vite](https://vitejs.dev/) build tool is used to develop and build the frontend application.
 
 ## Usage guide
 
 ### Backend
 
-You need to perform the following steps to setup the backend:
+The backend application requires Java 17 as a minimum version.
+
+You need to perform the following steps to setup the backend application:
 
 1. Add a `local.properties` file to the `src/main/resources` folder (same folder that has the `application.properties` file) with the following content:
 
@@ -28,14 +36,22 @@ Then, you can start the backend application by performing the following steps:
 
 You can run the backend tests by running the `./mvnw test` command.
 
+#### Running with Docker
+
+Docker can be used to deploy the backend application or run it locally. In the production environment, the Docker container requires the environment variables defined in the [production.properties](https://github.com/Kaltsoon/spring-boot-vite-example/blob/main/src/main/resources/production.properties) file. 
+
+The backend application can be started with Docker by performing the following steps:
+
+1. Build the image by running the `docker build . -t messenger-backend` command
+2. Create and start the container by running the `docker run -p 8080:8080 -e SPRING_CONFIG_NAME=application messenger-backend` command
+3. Once the server has started, the application is accessible at <http://localhost:8080>
+
 ### Frontend
+
+The frontend application requires Node.js 18 as a minimum version.
 
 You can start the frontend application by performing the following steps in the `frontend` folder:
 
 1. Install the dependencies by running the `npm install` command
 2. Start the Vite development server by running the `npm run dev` command
 3. Once the development server has started, the application is accessible at <http://localhost:5173>
-
-### Docker
-
-Docker can be used to deploy the application (both backend and frontend) or run it locally. The Docker container requires the environment variables defined in the [production.properties](https://github.com/Kaltsoon/spring-boot-vite-example/blob/main/src/main/resources/production.properties) file. In the production build, the frontend is accessible at the `/app` path.

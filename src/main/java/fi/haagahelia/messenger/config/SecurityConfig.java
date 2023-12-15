@@ -14,7 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
-
+import static org.springframework.security.config.Customizer.withDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Configuration
@@ -30,20 +30,17 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        RequestMatcher matcherIndex = antMatcher(HttpMethod.GET, "/");
-        RequestMatcher matcherFrontend = antMatcher(HttpMethod.GET, "/{prefix:^(?!api).+}/**");
-        RequestMatcher matcherAssets = antMatcher(HttpMethod.GET, "/frontend/**");
         RequestMatcher matcherLogin = antMatcher(HttpMethod.POST, "/api/auth/login");
         RequestMatcher matcherRegister = antMatcher(HttpMethod.POST, "/api/users");
         RequestMatcher matcherAllMessages = antMatcher(HttpMethod.GET, "/api/messages");
         RequestMatcher matcherMessageById = antMatcher(HttpMethod.GET, "/api/messages/*");
         RequestMatcher matcherError = antMatcher("/error");
 
-        http.csrf(csrf -> csrf.disable())
+        http.csrf(csrf -> csrf.disable()).cors(withDefaults())
                 .sessionManagement(
                         sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-                        .requestMatchers(matcherIndex, matcherFrontend, matcherAssets, matcherLogin, matcherRegister,
+                        .requestMatchers(matcherLogin, matcherRegister,
                                 matcherAllMessages, matcherMessageById, matcherError)
                         .permitAll()
                         .anyRequest()
