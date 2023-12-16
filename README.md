@@ -58,4 +58,4 @@ You can start the frontend application by performing the following steps in the 
 
 ## Documentation
 
-- [Swagger documentation](http://localhost:8080/swagger-ui/index.html)
+- [Swagger documentation](http://localhost:8080/swagger-ui/index.html) (accessible when the backend server is running)
