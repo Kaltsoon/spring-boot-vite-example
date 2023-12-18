@@ -3,7 +3,6 @@ COPY . .
 RUN mvn clean package -DskipTests
 
 FROM openjdk:21-jdk-slim
-ENV SPRING_CONFIG_NAME=application,production
 COPY --from=build /target/messenger-0.0.1-SNAPSHOT.jar messenger.jar
 EXPOSE 8080
 ENTRYPOINT ["java","-jar","messenger.jar"]
