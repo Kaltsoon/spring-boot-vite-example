@@ -25,7 +25,7 @@ You need to perform the following steps to setup the backend application:
    auth.jwt-secret=<jwt-secret>
    ```
 
-   Replace the `<jwt-secret>` with a string that has at least 32 characters.
+   Replace the `<jwt-secret>` with a string that has at least 48 characters.
 
 Then, you can start the backend application by performing the following steps:
 
@@ -58,4 +58,4 @@ You can start the frontend application by performing the following steps in the 
 
 ## Documentation
 
-- [Swagger documentation](http://localhost:8080/swagger-ui/index.html)
+- [Swagger documentation](http://localhost:8080/swagger-ui/index.html) (accessible when the backend server is running)
