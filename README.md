@@ -46,6 +46,8 @@ The backend application can be started with Docker by performing the following s
 2. Create and start the container by running the `docker run -p 8080:8080 messenger-backend` command
 3. Once the server has started, the application is accessible at <http://localhost:8080>
 
+By setting the `SPRING_PROFILES_ACTIVE` environment variable value as `production`, the application will use the production environment properties.
+
 ### Frontend
 
 The frontend application requires Node.js 18 as a minimum version.
