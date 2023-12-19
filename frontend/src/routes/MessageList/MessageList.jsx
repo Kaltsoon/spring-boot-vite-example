@@ -1,18 +1,8 @@
-import { useEffect, useState } from "react";
 import { Typography, Button, Box, Link } from "@mui/material";
-import { Link as RouterLink } from "react-router-dom";
-import { getAllMessages } from "../services/messageService";
-import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
+import { Link as RouterLink, useLoaderData } from "react-router-dom";
 
 export default function MessageList() {
-  const [messages, setMessages] = useState([]);
-  const { authenticatedUser } = useAuthenticatedUser();
-
-  useEffect(() => {
-    getAllMessages().then((messages) => {
-      setMessages(messages);
-    });
-  }, []);
+  const { messages, user } = useLoaderData();
 
   return (
     <>
@@ -28,7 +18,7 @@ export default function MessageList() {
       </ul>
 
       <Box sx={{ marginTop: 2 }}>
-        {authenticatedUser ? (
+        {user ? (
           <Button component={RouterLink} to="/messages/add" variant="contained">
             Add a message
           </Button>

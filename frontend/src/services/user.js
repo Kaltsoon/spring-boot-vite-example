@@ -1,13 +1,9 @@
-import {
-  apiClient,
-  setAuthenticationToken,
-  removeAuthenticationToken,
-} from "./apiService";
+import { apiClient, setAccessToken, removeAccessToken } from "./api";
 
 export function login(credentials) {
   return apiClient.post("/api/auth/login", credentials).then((response) => {
     if (response.data.accessToken) {
-      setAuthenticationToken(response.data.accessToken);
+      setAccessToken(response.data.accessToken);
     }
 
     return response.data;
@@ -15,7 +11,7 @@ export function login(credentials) {
 }
 
 export function logout() {
-  removeAuthenticationToken();
+  removeAccessToken();
 }
 
 export function createUser(user) {
@@ -23,5 +19,14 @@ export function createUser(user) {
 }
 
 export function getAuthenticatedUser() {
-  return apiClient.get("/api/users/current").then((response) => response.data);
+  return apiClient
+    .get("/api/users/current")
+    .then((response) => response.data)
+    .catch((error) => {
+      if (error.response?.status === 403) {
+        return null;
+      }
+
+      throw error;
+    });
 }

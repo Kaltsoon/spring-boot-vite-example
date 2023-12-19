@@ -1,33 +1,39 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Container, CssBaseline } from "@mui/material";
-import { QueryClientProvider, QueryClient } from "react-query";
-import MessageList from "./components/MessageList";
-import AddMessage from "./components/AddMessage";
-import Login from "./components/Login";
-import AppBar from "./components/AppBar";
-import Register from "./components/Register";
+import { Suspense } from "react";
 
-const queryClient = new QueryClient();
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  RouterProvider,
+} from "react-router-dom";
+
+import { CssBaseline } from "@mui/material";
+
+import Root, { rootLoader } from "./routes/Root";
+import MessageList, { messageListLoader } from "./routes/MessageList";
+import AddMessage from "./routes/AddMessage";
+import Login from "./routes/Login";
+import Register from "./routes/Register";
+import RouteProgress from "./components/RouteProgress";
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<Root />} loader={rootLoader}>
+      <Route index element={<MessageList />} loader={messageListLoader} />
+      <Route path="messages/add" element={<AddMessage />} />
+      <Route path="login" element={<Login />} />
+      <Route path="register" element={<Register />} />
+    </Route>
+  )
+);
 
 function App() {
   return (
     <>
       <CssBaseline />
-      <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-          <>
-            <AppBar />
-            <Container sx={{ marginY: 2 }}>
-              <Routes>
-                <Route path="/" element={<MessageList />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/messages/add" element={<AddMessage />} />
-              </Routes>
-            </Container>
-          </>
-        </BrowserRouter>
-      </QueryClientProvider>
+      <Suspense fallback={<RouteProgress />}>
+        <RouterProvider router={router} />
+      </Suspense>
     </>
   );
 }

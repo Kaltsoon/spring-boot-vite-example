@@ -15,16 +15,21 @@ import {
 } from "@mui/material";
 
 import MenuIcon from "@mui/icons-material/Menu";
-import { Link, useLocation } from "react-router-dom";
-import { useQueryClient } from "react-query";
-import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
-import { logout } from "../services/userService";
 
-export default function AppBar() {
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useRevalidator,
+} from "react-router-dom";
+
+import { logout } from "../services/user";
+
+export default function AppBar({ user }) {
   const location = useLocation();
-  const queryClient = useQueryClient();
+  const revalidator = useRevalidator();
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const { authenticatedUser } = useAuthenticatedUser();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setDrawerOpen(false);
@@ -32,7 +37,8 @@ export default function AppBar() {
 
   function handleLogout() {
     logout();
-    queryClient.invalidateQueries();
+    navigate("/");
+    revalidator.revalidate();
   }
 
   return (
@@ -72,7 +78,7 @@ export default function AppBar() {
             >
               Messenger
             </Typography>
-            {!authenticatedUser ? (
+            {!user ? (
               <>
                 <Button
                   color="inherit"
