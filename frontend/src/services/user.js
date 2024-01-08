@@ -23,7 +23,9 @@ export function getAuthenticatedUser() {
     .get("/api/users/current")
     .then((response) => response.data)
     .catch((error) => {
-      if (error.response?.status === 403) {
+      const status = error.response?.status;
+
+      if (status === 403 || status === 401) {
         return null;
       }
 

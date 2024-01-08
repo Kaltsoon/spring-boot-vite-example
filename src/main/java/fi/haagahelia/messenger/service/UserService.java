@@ -31,6 +31,10 @@ public class UserService {
 
         UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) authentication;
 
+        if (token.getPrincipal() == null) {
+            return Optional.empty();
+        }
+
         return userRepository.findOneByUsername(token.getPrincipal().toString());
     }
 

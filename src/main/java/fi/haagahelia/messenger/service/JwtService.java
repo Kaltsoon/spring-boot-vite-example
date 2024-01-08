@@ -1,5 +1,6 @@
 package fi.haagahelia.messenger.service;
 
+import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
@@ -24,11 +25,6 @@ public class JwtService {
 	@Value("${auth.jwt-secret}")
 	private String jwtSecret;
 
-	private Key getSigningKey() {
-		byte[] keyBytes = jwtSecret.getBytes(StandardCharsets.UTF_8);
-		return Keys.hmacShaKeyFor(keyBytes);
-	}
-
 	public AccessTokenPayloadDto getAccessToken(String username) {
 		Instant expiresAt = Instant.now().plusMillis(EXPIRATION_TIME);
 
@@ -46,10 +42,25 @@ public class JwtService {
 			return null;
 		}
 
-		String user = Jwts.parserBuilder().setSigningKey(getSigningKey()).build()
-				.parseClaimsJws(authorizationHeaderValue.replace(PREFIX, ""))
-				.getBody().getSubject();
+		JwtParser parser = getJwtParser();
 
-		return user;
+		try {
+			String user = parser
+					.parseClaimsJws(authorizationHeaderValue.replace(PREFIX, ""))
+					.getBody().getSubject();
+
+			return user;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	private Key getSigningKey() {
+		byte[] keyBytes = jwtSecret.getBytes(StandardCharsets.UTF_8);
+		return Keys.hmacShaKeyFor(keyBytes);
+	}
+
+	private JwtParser getJwtParser() {
+		return Jwts.parserBuilder().setSigningKey(getSigningKey()).build();
 	}
 }
