@@ -20,6 +20,8 @@ import fi.haagahelia.messenger.model.User;
 import fi.haagahelia.messenger.repository.MessageRepository;
 import fi.haagahelia.messenger.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
@@ -47,6 +49,10 @@ public class MessageRestController {
         summary = "Get message by id",
         description = "Returns the message associated with the provided id"
     )
+	@ApiResponses(value = {
+		@ApiResponse(responseCode = "200", description = "Successful operation"),
+		@ApiResponse(responseCode = "404", description = "Message with the provided id does not exist")
+	})
 	@GetMapping("/{id}")
 	public Message getMessageById(@PathVariable Long id) {
 		return messageRepository.findById(id).orElseThrow(
