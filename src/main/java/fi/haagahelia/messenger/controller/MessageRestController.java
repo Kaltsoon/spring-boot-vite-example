@@ -28,7 +28,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/api/messages")
 @CrossOrigin(origins = "*")
-@Tag(name = "Message", description = "Operations for accessing and managing messages")
+@Tag(name = "Message", description = "Operations for accessing and managing the messages")
 public class MessageRestController {
 	@Autowired
 	private MessageRepository messageRepository;
