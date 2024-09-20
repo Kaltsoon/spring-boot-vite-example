@@ -11,7 +11,7 @@ The project architecture consists of the _backend application_ and the _frontend
 
 The frontend application is implemented with [React](https://react.dev/). The user-interface is implemented with [Material UI](https://mui.com/). The [Vite](https://vitejs.dev/) build tool is used to develop and build the frontend application.
 
-## Usage guide
+## Developer guide
 
 ### Backend
 
