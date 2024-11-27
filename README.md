@@ -11,7 +11,7 @@ The project architecture consists of the _backend application_ and the _frontend
 
 The frontend application is implemented with [React](https://react.dev/). The user-interface is implemented with [Material UI](https://mui.com/). The [Vite](https://vitejs.dev/) build tool is used to develop and build the frontend application.
 
-## Usage guide
+## Developer guide
 
 ### Backend
 
@@ -58,6 +58,6 @@ You can start the frontend application by performing the following steps in the 
 2. Start the Vite development server by running the `npm run dev` command
 3. Once the development server has started, the application is accessible at <http://localhost:5173>
 
-## Documentation
+## REST API
 
-- [Swagger documentation](http://localhost:8080/swagger-ui/index.html) (accessible when the backend server is running)
+The REST API has [Swagger documentation](http://localhost:8080/swagger-ui/index.html) (accessible when the backend server is running).
