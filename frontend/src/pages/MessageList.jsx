@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Typography, Button, Box, Link } from "@mui/material";
-import { Link as RouterLink, useLoaderData } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 
 import { getAllMessages } from "../services/message";
 import { getAuthenticatedUser } from "../services/user";
