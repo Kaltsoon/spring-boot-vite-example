@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { Typography, Button, Box, TextField, Alert } from "@mui/material";
-import { Link, useNavigate, useRevalidator } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-import { login } from "../../services/user";
+import { login } from "../services/user";
 
 export default function Login() {
   const navigate = useNavigate();
-  const revalidator = useRevalidator();
   const [error, setError] = useState();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -17,7 +16,7 @@ export default function Login() {
     login({ username, password })
       .then(() => {
         navigate("/");
-        revalidator.revalidate();
+        window.location.reload();
       })
       .catch((error) => {
         if (error.response.data) {

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Typography, Button, Box, TextField } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 
-import { createMessage } from "../../services/message";
+import { createMessage } from "../services/message";
 
 export default function AddMessage() {
   const navigate = useNavigate();

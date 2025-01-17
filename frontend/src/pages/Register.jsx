@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Typography, Button, Box, TextField, Alert } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import { createUser } from "../../services/user";
+import { createUser } from "../services/user";
 
 export default function Register() {
   const navigate = useNavigate();
