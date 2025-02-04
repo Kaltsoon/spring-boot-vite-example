@@ -82,8 +82,9 @@ export default function AppBar({ user }) {
                   Login
                 </Button>
                 <Button
-                  color="inherit"
                   component={Link}
+                  variant="contained"
+                  color="success"
                   to="/Register"
                   sx={{ marginRight: 1 }}
                 >
