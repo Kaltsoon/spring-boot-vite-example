@@ -5,6 +5,7 @@
 
 _Messenger_ is a simple messaging application where registered users can post messages. The project acts as an example project for a single-page application implemented with Spring Boot and React.
 
+
 ## Architecture overview
 
 The project architecture consists of the _backend application_ and the _frontend application_. The backend application is a RESTful web service implemented with [Spring Boot](https://spring.io/projects/spring-boot). It provides a REST API endpoints for the frontend application. The backend application's authentication is implemented with a stateless [JWT token](https://jwt.io/introduction) authentication. The backend application uses [H2 Database Engine](https://www.h2database.com/html/main.html) as a development environment database and [PostgreSQL](https://www.postgresql.org/) as a production environment database.
