@@ -9,16 +9,16 @@ _Messenger_ is a simple messaging application where registered users can post me
 
 The project architecture consists of the _backend application_ and the _frontend application_. The backend application is a RESTful web service implemented with [Spring Boot](https://spring.io/projects/spring-boot). It provides REST API endpoints for the frontend application. The backend application's authentication is implemented with a stateless [JWT token](https://jwt.io/introduction) authentication. The backend application uses [H2 Database Engine](https://www.h2database.com/html/main.html) as a development environment database and [PostgreSQL](https://www.postgresql.org/) as a production environment database.
 
+The frontend application is implemented with [React](https://react.dev/). The user interface is implemented with [Material UI](https://mui.com/). The [Vite](https://vitejs.dev/) build tool is used to develop and build the frontend application.
+
 ```mermaid
-flowchart TB
+flowchart LR
     backend[Spring Boot Backend]
     database[(PostgreSQL Database)]
     frontend[React Frontend]
     backend-- Database queries -->database
     frontend-- REST API requests --> backend
 ```
-
-The frontend application is implemented with [React](https://react.dev/). The user interface is implemented with [Material UI](https://mui.com/). The [Vite](https://vitejs.dev/) build tool is used to develop and build the frontend application.
 
 ## Developer guide
 
