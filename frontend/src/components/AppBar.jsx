@@ -15,19 +15,12 @@ import {
 } from "@mui/material";
 
 import MenuIcon from "@mui/icons-material/Menu";
-
-import {
-  Link,
-  useLocation,
-  useNavigate,
-  useRevalidator,
-} from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { logout } from "../services/user";
 
 export default function AppBar({ user }) {
   const location = useLocation();
-  const revalidator = useRevalidator();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -38,7 +31,7 @@ export default function AppBar({ user }) {
   function handleLogout() {
     logout();
     navigate("/");
-    revalidator.revalidate();
+    window.location.reload();
   }
 
   return (
@@ -89,8 +82,9 @@ export default function AppBar({ user }) {
                   Login
                 </Button>
                 <Button
-                  color="inherit"
                   component={Link}
+                  variant="contained"
+                  color="success"
                   to="/Register"
                   sx={{ marginRight: 1 }}
                 >

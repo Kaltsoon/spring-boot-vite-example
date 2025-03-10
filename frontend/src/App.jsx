@@ -1,16 +1,15 @@
 import { Suspense } from "react";
-import { RouterProvider } from "react-router-dom";
 import { CssBaseline } from "@mui/material";
 
 import RouteProgress from "./components/RouteProgress";
-import router from "./routes/router";
+import RouterRoot from "./pages/RouterRoot";
 
 function App() {
   return (
     <>
       <CssBaseline />
-      <Suspense fallback={<RouteProgress />}>
-        <RouterProvider router={router} />
+      <Suspense fnpallback={<RouteProgress />}>
+        <RouterRoot />
       </Suspense>
     </>
   );

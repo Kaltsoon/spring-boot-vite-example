@@ -3,13 +3,22 @@
 [![CI](https://github.com/Kaltsoon/spring-boot-vite-example/actions/workflows/ci.yml/badge.svg)](https://github.com/Kaltsoon/spring-boot-vite-example/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/Kaltsoon/spring-boot-vite-example/graph/badge.svg?token=FU2MFP4JLH)](https://codecov.io/gh/Kaltsoon/spring-boot-vite-example)
 
-_Messenger_ is a simple messaging application where registered users can post messages. The project acts as an example project for a single-page application implemented with Spring Boot and React.
+_Messenger_ is a simple messaging application where registered users can post messages. The project acts as an example project for a single-page application implemented with Spring Boot and React. Test
 
 ## Architecture overview
 
-The project architecture consists of the _backend application_ and the _frontend application_. The backend application is a RESTful web service implemented with [Spring Boot](https://spring.io/projects/spring-boot). It provides a REST API endpoints for the frontend application. The backend application's authentication is implemented with a stateless [JWT token](https://jwt.io/introduction) authentication. The backend application uses [H2 Database Engine](https://www.h2database.com/html/main.html) as a development environment database and [PostgreSQL](https://www.postgresql.org/) as a production environment database.
+The project architecture consists of the _backend application_ and the _frontend application_. The backend application is a RESTful web service implemented with [Spring Boot](https://spring.io/projects/spring-boot). It provides REST API endpoints for the frontend application. The backend application's authentication is implemented with a stateless [JWT token](https://jwt.io/introduction) authentication. The backend application uses [H2 Database Engine](https://www.h2database.com/html/main.html) as a development environment database and [PostgreSQL](https://www.postgresql.org/) as a production environment database.
 
-The frontend application is implemented with [React](https://react.dev/). The user-interface is implemented with [Material UI](https://mui.com/). The [Vite](https://vitejs.dev/) build tool is used to develop and build the frontend application.
+The frontend application is implemented with [React](https://react.dev/). The user interface is implemented with [Material UI](https://mui.com/). The [Vite](https://vitejs.dev/) build tool is used to develop and build the frontend application.
+
+```mermaid
+flowchart LR
+    backend[Spring Boot Backend]
+    database[(PostgreSQL Database)]
+    frontend[React Frontend]
+    backend-- Database queries -->database
+    frontend-- REST API requests --> backend
+```
 
 ## Developer guide
 
