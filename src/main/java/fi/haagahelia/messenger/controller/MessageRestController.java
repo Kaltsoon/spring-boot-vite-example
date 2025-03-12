@@ -42,7 +42,7 @@ public class MessageRestController {
     )
 	@GetMapping("")
 	public List<Message> getAllMessages() {
-		return List.of(new Message("Hello Rahti!", null));
+		return messageRepository.findAll();
 	}
 
 	@Operation(
