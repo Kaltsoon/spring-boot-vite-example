@@ -40,8 +40,8 @@ public class AuthRestController {
                     bindingResult.getAllErrors().get(0).getDefaultMessage());
         }
 
-        UsernamePasswordAuthenticationToken credentials = new UsernamePasswordAuthenticationToken(login.getUsername(),
-                login.getPassword());
+        UsernamePasswordAuthenticationToken credentials = new UsernamePasswordAuthenticationToken(login.username(),
+                login.password());
 
         try {
             Authentication auth = authenticationManager.authenticate(credentials);

@@ -48,7 +48,7 @@ public class UserRestController {
     )
     @PostMapping("")
     public User createUser(@Valid @RequestBody RegisterUserDto registration, BindingResult bindingResult) {
-        Optional<User> existingUser = userRepository.findOneByUsername(registration.getUsername());
+        Optional<User> existingUser = userRepository.findOneByUsername(registration.username());
 
         if (existingUser.isPresent()) {
             bindingResult.rejectValue("username", "UsernameTaken",

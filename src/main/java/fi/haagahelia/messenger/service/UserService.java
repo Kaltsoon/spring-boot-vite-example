@@ -39,8 +39,8 @@ public class UserService {
     }
 
     public User registerUser(RegisterUserDto registration) {
-        String passwordHash = passwordEncoder.encode(registration.getPassword());
-        User newUser = new User(registration.getUsername(), passwordHash, "USER");
+        String passwordHash = passwordEncoder.encode(registration.password());
+        User newUser = new User(registration.username(), passwordHash, "USER");
 
         return userRepository.save(newUser);
     }

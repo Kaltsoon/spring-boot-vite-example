@@ -56,7 +56,7 @@ public class MessageRestControllerTest {
 
         this.authenticatedUser = userService.registerUser(new RegisterUserDto("johndoe", "john123"));
         this.authorizationHeader = "Bearer "
-                + jwtService.getAccessToken(authenticatedUser.getUsername()).getAccessToken();
+                + jwtService.getAccessToken(authenticatedUser.getUsername()).accessToken();
     }
 
     @Test

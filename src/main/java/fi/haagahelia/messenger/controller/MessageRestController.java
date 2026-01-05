@@ -73,7 +73,7 @@ public class MessageRestController {
 		User user = userService.getAuthenticatedUser()
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Authentication is required"));
 
-		Message newMessage = new Message(message.getContent(), user);
+		Message newMessage = new Message(message.content(), user);
 		return messageRepository.save(newMessage);
 	}
 }
