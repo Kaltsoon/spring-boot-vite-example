@@ -20,7 +20,7 @@ export default function MessageList() {
   return (
     <>
       <Typography variant="h4" component="h1" sx={{ marginBottom: 2 }}>
-        Messages
+        Welcome {user.username}!
       </Typography>
       {messages && (
         <ul>
