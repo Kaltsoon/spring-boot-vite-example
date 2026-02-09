@@ -74,7 +74,8 @@ The API client handles token storage and automatic inclusion in requests:
 3. **Request Interceptor**: An Axios interceptor automatically adds the token to all requests (line 22-30)
    - Before each request, it retrieves the token from localStorage
    - If a token exists, adds it to the `Authorization` header
-   - The token is sent as-is (raw JWT token without "Bearer " prefix)
+   - The token is sent as-is (raw JWT token)
+   - Note: The standard convention is to send tokens with "Bearer " prefix, but this implementation sends the raw token without it
 
 **Key Code**:
 ```javascript
@@ -254,10 +255,13 @@ The `getAuthUser` method validates and extracts the username from a JWT token:
 1. Extracts the `Authorization` header value (line 39)
 2. Returns null if no authorization header exists (line 41-43)
 3. Parses the JWT token (line 48-50)
-   - Removes the "Bearer " prefix
+   - Attempts to remove the "Bearer " prefix (using `.replace(PREFIX, "")`)
+   - If no prefix exists, the replace has no effect and the raw token is parsed
    - Verifies the signature using the signing key
    - Extracts the subject (username) from the token
 4. Returns null if token is invalid or expired (caught in the exception handler, line 53-55)
+
+**Note**: Although the code attempts to remove a "Bearer " prefix, the frontend sends the raw token without this prefix. The `.replace()` method simply returns the original token unchanged when the prefix is not present, so the implementation works correctly.
 
 **Key Code**:
 ```java
