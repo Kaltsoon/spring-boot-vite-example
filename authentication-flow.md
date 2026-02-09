@@ -69,7 +69,7 @@ The API client handles token storage and automatic inclusion in requests:
    
 2. **Token Retrieval**: The `getAccessToken()` function retrieves the token from localStorage
 
-3. **Request Interceptor**: An Axios interceptor automatically adds the token to all requests
+3. **Request Interceptor**: An [Axios](https://axios-http.com/docs/intro) interceptor automatically adds the token to all requests
    - Before each request, it retrieves the token from localStorage
    - If a token exists, adds it to the `Authorization` header
    - The token is sent in the format `Bearer <TOKEN>`, which is a common format
