@@ -10,7 +10,7 @@ The application uses **JWT (JSON Web Token)** authentication with a stateless se
 
 ### 1. Frontend: User Login UI
 
-**File**: [`frontend/src/pages/Login.jsx`](frontend/src/pages/Login.jsx)
+File: [`frontend/src/pages/Login.jsx`](frontend/src/pages/Login.jsx)
 
 The login process begins at the Login component where the user enters their credentials:
 
@@ -20,7 +20,6 @@ The login process begins at the Login component where the user enters their cred
 4. On success, the user is navigated to the home page and the page is reloaded
 5. On error, an error message is displayed
 
-**Key Code**:
 ```javascript
 function handleSubmitLogin(event) {
   event.preventDefault();
@@ -40,7 +39,7 @@ function handleSubmitLogin(event) {
 
 ### 2. Frontend: Login Service
 
-**File**: [`frontend/src/services/user.js`](frontend/src/services/user.js)
+File: [`frontend/src/services/user.js`](frontend/src/services/user.js)
 
 The `login` function handles the HTTP request to the backend:
 
@@ -48,7 +47,6 @@ The `login` function handles the HTTP request to the backend:
 2. If the response contains an `accessToken`, stores it using `setAccessToken()`
 3. Returns the response data
 
-**Key Code**:
 ```javascript
 export function login(credentials) {
   return apiClient.post("/api/auth/login", credentials).then((response) => {
@@ -62,7 +60,7 @@ export function login(credentials) {
 
 ### 3. Frontend: API Client and Token Storage
 
-**File**: [`frontend/src/services/api.js`](frontend/src/services/api.js)
+File: [`frontend/src/services/api.js`](frontend/src/services/api.js)
 
 The API client handles token storage and automatic inclusion in requests:
 
@@ -77,7 +75,6 @@ The API client handles token storage and automatic inclusion in requests:
    - The token is sent as-is (raw JWT token)
    - Note: The standard convention is to send tokens with "Bearer " prefix, but this implementation sends the raw token without it
 
-**Key Code**:
 ```javascript
 export function setAccessToken(token) {
   localStorage.setItem(ACCESS_TOKEN_KEY, token);
@@ -96,7 +93,7 @@ apiClient.interceptors.request.use((config) => {
 
 ### 4. Backend: Authentication Endpoint
 
-**File**: [`src/main/java/fi/haagahelia/messenger/controller/AuthRestController.java`](src/main/java/fi/haagahelia/messenger/controller/AuthRestController.java)
+File: [`src/main/java/fi/haagahelia/messenger/controller/AuthRestController.java`](src/main/java/fi/haagahelia/messenger/controller/AuthRestController.java)
 
 The `/api/auth/login` endpoint handles authentication requests:
 
@@ -114,7 +111,6 @@ The `/api/auth/login` endpoint handles authentication requests:
 
 5. **Response**: Returns an `AccessTokenPayloadDto` containing the token and expiration time
 
-**Key Code**:
 ```java
 @PostMapping("/login")
 public ResponseEntity<?> login(@Valid @RequestBody LoginUserDto login, BindingResult bindingResult) {
@@ -139,7 +135,7 @@ public ResponseEntity<?> login(@Valid @RequestBody LoginUserDto login, BindingRe
 
 ### 5. Backend: User Verification
 
-**File**: [`src/main/java/fi/haagahelia/messenger/service/UserDetailsServiceImpl.java`](src/main/java/fi/haagahelia/messenger/service/UserDetailsServiceImpl.java)
+File: [`src/main/java/fi/haagahelia/messenger/service/UserDetailsServiceImpl.java`](src/main/java/fi/haagahelia/messenger/service/UserDetailsServiceImpl.java)
 
 The `UserDetailsServiceImpl` is called by Spring Security's `AuthenticationManager` during authentication:
 
@@ -163,7 +159,7 @@ public UserDetails loadUserByUsername(String username) throws UsernameNotFoundEx
 
 ### 6. Backend: JWT Token Generation
 
-**File**: [`src/main/java/fi/haagahelia/messenger/service/JwtService.java`](src/main/java/fi/haagahelia/messenger/service/JwtService.java)
+File: [`src/main/java/fi/haagahelia/messenger/service/JwtService.java`](src/main/java/fi/haagahelia/messenger/service/JwtService.java)
 
 The `JwtService` generates JWT tokens:
 
@@ -178,7 +174,6 @@ The `JwtService` generates JWT tokens:
 
 3. **Response**: Returns an `AccessTokenPayloadDto` with the token string and expiration timestamp
 
-**Key Code**:
 ```java
 public AccessTokenPayloadDto getAccessToken(String username) {
     Instant expiresAt = Instant.now().plusMillis(EXPIRATION_TIME);
@@ -208,7 +203,7 @@ The Axios request interceptor (in `api.js`) automatically includes the token fro
 
 ### Backend: Authentication Filter
 
-**File**: [`src/main/java/fi/haagahelia/messenger/config/AuthenticationFilter.java`](src/main/java/fi/haagahelia/messenger/config/AuthenticationFilter.java)
+File: [`src/main/java/fi/haagahelia/messenger/config/AuthenticationFilter.java`](src/main/java/fi/haagahelia/messenger/config/AuthenticationFilter.java)
 
 The `AuthenticationFilter` validates the JWT token on every request:
 
@@ -226,7 +221,6 @@ The `AuthenticationFilter` validates the JWT token on every request:
 
 5. **Filter Chain**: Continues the filter chain
 
-**Key Code**:
 ```java
 @Override
 protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -248,7 +242,7 @@ protected void doFilterInternal(HttpServletRequest request, HttpServletResponse 
 
 ### Backend: JWT Token Validation
 
-**File**: [`src/main/java/fi/haagahelia/messenger/service/JwtService.java`](src/main/java/fi/haagahelia/messenger/service/JwtService.java)
+File: [`src/main/java/fi/haagahelia/messenger/service/JwtService.java`](src/main/java/fi/haagahelia/messenger/service/JwtService.java)
 
 The `getAuthUser` method validates and extracts the username from a JWT token:
 
@@ -261,9 +255,6 @@ The `getAuthUser` method validates and extracts the username from a JWT token:
    - Extracts the subject (username) from the token
 4. Returns null if token is invalid or expired (caught in the exception handler)
 
-**Note**: Although the code attempts to remove a "Bearer " prefix, the frontend sends the raw token without this prefix. The `.replace()` method simply returns the original token unchanged when the prefix is not present, so the implementation works correctly.
-
-**Key Code**:
 ```java
 public String getAuthUser(HttpServletRequest request) {
     String authorizationHeaderValue = request.getHeader(HttpHeaders.AUTHORIZATION);
@@ -288,7 +279,7 @@ public String getAuthUser(HttpServletRequest request) {
 
 ### Backend: Security Configuration
 
-**File**: [`src/main/java/fi/haagahelia/messenger/config/SecurityConfig.java`](src/main/java/fi/haagahelia/messenger/config/SecurityConfig.java)
+File: [`src/main/java/fi/haagahelia/messenger/config/SecurityConfig.java`](src/main/java/fi/haagahelia/messenger/config/SecurityConfig.java)
 
 The security configuration defines which endpoints require authentication:
 
@@ -306,7 +297,6 @@ The security configuration defines which endpoints require authentication:
 
 4. **Filter Registration**: Adds `AuthenticationFilter` before Spring Security's default authentication filter
 
-**Key Code**:
 ```java
 @Bean
 public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -329,37 +319,3 @@ public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     return http.build();
 }
 ```
-
-## Data Flow Summary
-
-1. **User submits login form** → Login.jsx
-2. **Frontend sends credentials** → POST /api/auth/login
-3. **Backend validates credentials** → AuthRestController → AuthenticationManager → UserDetailsServiceImpl
-4. **Backend generates JWT** → JwtService
-5. **Backend returns token** → AccessTokenPayloadDto
-6. **Frontend stores token** → localStorage
-7. **Frontend includes token in subsequent requests** → Axios interceptor adds Authorization header
-8. **Backend validates token on each request** → AuthenticationFilter → JwtService → SecurityContext
-
-## Key Components
-
-| Component | Purpose | File |
-|-----------|---------|------|
-| Login.jsx | Login UI form | `frontend/src/pages/Login.jsx` |
-| user.js | Login API service | `frontend/src/services/user.js` |
-| api.js | API client with token interceptor | `frontend/src/services/api.js` |
-| AuthRestController | Login endpoint | `src/main/java/.../controller/AuthRestController.java` |
-| JwtService | JWT generation & validation | `src/main/java/.../service/JwtService.java` |
-| UserDetailsServiceImpl | User verification | `src/main/java/.../service/UserDetailsServiceImpl.java` |
-| AuthenticationFilter | Token validation on requests | `src/main/java/.../config/AuthenticationFilter.java` |
-| SecurityConfig | Security & endpoint configuration | `src/main/java/.../config/SecurityConfig.java` |
-
-## Security Notes
-
-- Passwords are hashed using **BCrypt** before storage
-- JWT tokens expire after **8 hours**
-- Tokens are signed using **HMAC with a secret key**
-- The session is **stateless** - no server-side session storage
-- Token is stored in browser's **localStorage** (consider httpOnly cookies for enhanced security in production)
-- CSRF protection is disabled due to stateless JWT authentication
-- CORS is enabled to allow cross-origin requests
