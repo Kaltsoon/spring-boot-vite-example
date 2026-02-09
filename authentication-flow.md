@@ -72,8 +72,7 @@ The API client handles token storage and automatic inclusion in requests:
 3. **Request Interceptor**: An Axios interceptor automatically adds the token to all requests
    - Before each request, it retrieves the token from localStorage
    - If a token exists, adds it to the `Authorization` header
-   - The token is sent as-is (raw JWT token)
-   - Note: The standard convention is to send tokens with "Bearer " prefix, but this implementation sends the raw token without it
+   - The token is sent in the format `Bearer <TOKEN>`, which is a common format
 
 ```javascript
 export function setAccessToken(token) {
