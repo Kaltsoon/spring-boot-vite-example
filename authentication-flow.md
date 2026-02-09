@@ -15,10 +15,10 @@ The application uses **JWT (JSON Web Token)** authentication with a stateless se
 The login process begins at the Login component where the user enters their credentials:
 
 1. User enters `username` and `password` in the form
-2. When the form is submitted, `handleSubmitLogin` is called (line 13-26)
-3. The function calls `login({ username, password })` service function (line 16)
-4. On success, the user is navigated to the home page and the page is reloaded (line 17-19)
-5. On error, an error message is displayed (line 21-25)
+2. When the form is submitted, `handleSubmitLogin` is called
+3. The function calls `login({ username, password })` service function
+4. On success, the user is navigated to the home page and the page is reloaded
+5. On error, an error message is displayed
 
 **Key Code**:
 ```javascript
@@ -44,9 +44,9 @@ function handleSubmitLogin(event) {
 
 The `login` function handles the HTTP request to the backend:
 
-1. Makes a POST request to `/api/auth/login` endpoint with credentials (line 4)
-2. If the response contains an `accessToken`, stores it using `setAccessToken()` (line 5-6)
-3. Returns the response data (line 9)
+1. Makes a POST request to `/api/auth/login` endpoint with credentials
+2. If the response contains an `accessToken`, stores it using `setAccessToken()`
+3. Returns the response data
 
 **Key Code**:
 ```javascript
@@ -66,12 +66,12 @@ export function login(credentials) {
 
 The API client handles token storage and automatic inclusion in requests:
 
-1. **Token Storage**: The `setAccessToken()` function stores the JWT token in browser's `localStorage` (line 6-8)
+1. **Token Storage**: The `setAccessToken()` function stores the JWT token in browser's `localStorage`
    - Storage key: `MESSENGER_ACCESS_TOKEN`
    
-2. **Token Retrieval**: The `getAccessToken()` function retrieves the token from localStorage (line 14-16)
+2. **Token Retrieval**: The `getAccessToken()` function retrieves the token from localStorage
 
-3. **Request Interceptor**: An Axios interceptor automatically adds the token to all requests (line 22-30)
+3. **Request Interceptor**: An Axios interceptor automatically adds the token to all requests
    - Before each request, it retrieves the token from localStorage
    - If a token exists, adds it to the `Authorization` header
    - The token is sent as-is (raw JWT token)
@@ -100,19 +100,19 @@ apiClient.interceptors.request.use((config) => {
 
 The `/api/auth/login` endpoint handles authentication requests:
 
-1. **Validation**: Validates the `LoginUserDto` request body (line 37-41)
+1. **Validation**: Validates the `LoginUserDto` request body
    - Checks that username and password are not blank
    - Returns HTTP 400 if validation fails
 
-2. **Authentication Token Creation**: Creates a `UsernamePasswordAuthenticationToken` with credentials (line 43-44)
+2. **Authentication Token Creation**: Creates a `UsernamePasswordAuthenticationToken` with credentials
 
-3. **Authentication**: Uses Spring Security's `AuthenticationManager` to authenticate (line 47)
+3. **Authentication**: Uses Spring Security's `AuthenticationManager` to authenticate
    - The `AuthenticationManager` delegates to `UserDetailsServiceImpl`
    - Throws exception if credentials are invalid
 
-4. **JWT Generation**: On successful authentication, generates a JWT token using `JwtService` (line 48)
+4. **JWT Generation**: On successful authentication, generates a JWT token using `JwtService`
 
-5. **Response**: Returns an `AccessTokenPayloadDto` containing the token and expiration time (line 50)
+5. **Response**: Returns an `AccessTokenPayloadDto` containing the token and expiration time
 
 **Key Code**:
 ```java
@@ -143,10 +143,10 @@ public ResponseEntity<?> login(@Valid @RequestBody LoginUserDto login, BindingRe
 
 The `UserDetailsServiceImpl` is called by Spring Security's `AuthenticationManager` during authentication:
 
-1. Implements Spring Security's `UserDetailsService` interface (line 13)
-2. The `loadUserByUsername` method queries the database for the user (line 18-20)
-3. Throws `UsernameNotFoundException` if user doesn't exist (line 20)
-4. Returns a Spring Security `UserDetails` object with username, password hash, and roles (line 22-23)
+1. Implements Spring Security's `UserDetailsService` interface
+2. The `loadUserByUsername` method queries the database for the user
+3. Throws `UsernameNotFoundException` if user doesn't exist
+4. Returns a Spring Security `UserDetails` object with username, password hash, and roles
 5. Spring Security automatically verifies the password using BCrypt
 
 **Key Code**:
@@ -167,16 +167,16 @@ public UserDetails loadUserByUsername(String username) throws UsernameNotFoundEx
 
 The `JwtService` generates JWT tokens:
 
-1. **Token Creation**: Creates a JWT with an 8-hour expiration (line 28-35)
+1. **Token Creation**: Creates a JWT with an 8-hour expiration
    - Sets the username as the subject (`setSubject`)
    - Sets expiration time (8 hours from now)
    - Signs the token with HMAC using the secret key
 
-2. **Signing Key**: Uses a secret key from application properties (`auth.jwt-secret`) (line 58-61)
+2. **Signing Key**: Uses a secret key from application properties (`auth.jwt-secret`)
    - Converts the secret to bytes
    - Creates an HMAC key for signing
 
-3. **Response**: Returns an `AccessTokenPayloadDto` with the token string and expiration timestamp (line 35)
+3. **Response**: Returns an `AccessTokenPayloadDto` with the token string and expiration timestamp
 
 **Key Code**:
 ```java
@@ -212,19 +212,19 @@ The Axios request interceptor (in `api.js`) automatically includes the token fro
 
 The `AuthenticationFilter` validates the JWT token on every request:
 
-1. **Execution**: Runs before every request as a `OncePerRequestFilter` (line 20, 25-39)
+1. **Execution**: Runs before every request as a `OncePerRequestFilter`
 
-2. **Token Extraction**: Extracts the JWT token from the `Authorization` header (line 27)
+2. **Token Extraction**: Extracts the JWT token from the `Authorization` header
 
-3. **Token Validation**: Uses `JwtService.getAuthUser()` to parse and validate the token (line 30)
+3. **Token Validation**: Uses `JwtService.getAuthUser()` to parse and validate the token
    - Parses the JWT
    - Verifies the signature
    - Extracts the username from the token's subject
 
-4. **Security Context**: If valid, creates an `Authentication` object and sets it in Spring Security's `SecurityContextHolder` (line 32-35)
+4. **Security Context**: If valid, creates an `Authentication` object and sets it in Spring Security's `SecurityContextHolder`
    - This makes the user authenticated for the current request
 
-5. **Filter Chain**: Continues the filter chain (line 38)
+5. **Filter Chain**: Continues the filter chain
 
 **Key Code**:
 ```java
@@ -252,14 +252,14 @@ protected void doFilterInternal(HttpServletRequest request, HttpServletResponse 
 
 The `getAuthUser` method validates and extracts the username from a JWT token:
 
-1. Extracts the `Authorization` header value (line 39)
-2. Returns null if no authorization header exists (line 41-43)
-3. Parses the JWT token (line 48-50)
+1. Extracts the `Authorization` header value
+2. Returns null if no authorization header exists
+3. Parses the JWT token
    - Attempts to remove the "Bearer " prefix (using `.replace(PREFIX, "")`)
    - If no prefix exists, the replace has no effect and the raw token is parsed
    - Verifies the signature using the signing key
    - Extracts the subject (username) from the token
-4. Returns null if token is invalid or expired (caught in the exception handler, line 53-55)
+4. Returns null if token is invalid or expired (caught in the exception handler)
 
 **Note**: Although the code attempts to remove a "Bearer " prefix, the frontend sends the raw token without this prefix. The `.replace()` method simply returns the original token unchanged when the prefix is not present, so the implementation works correctly.
 
@@ -292,19 +292,19 @@ public String getAuthUser(HttpServletRequest request) {
 
 The security configuration defines which endpoints require authentication:
 
-1. **Session Management**: Configured as STATELESS (line 33-35)
+1. **Session Management**: Configured as STATELESS
    - No server-side sessions are created
    - Each request must include the JWT token
 
-2. **Public Endpoints**: Certain endpoints are accessible without authentication (line 36-49)
+2. **Public Endpoints**: Certain endpoints are accessible without authentication
    - `POST /api/auth/login` - login endpoint
    - `POST /api/users` - user registration
    - `GET /api/messages/**` - viewing messages
    - Swagger documentation endpoints
 
-3. **Protected Endpoints**: All other endpoints require authentication (line 50-51)
+3. **Protected Endpoints**: All other endpoints require authentication
 
-4. **Filter Registration**: Adds `AuthenticationFilter` before Spring Security's default authentication filter (line 52)
+4. **Filter Registration**: Adds `AuthenticationFilter` before Spring Security's default authentication filter
 
 **Key Code**:
 ```java
